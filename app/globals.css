@@ -1,0 +1,326 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:       #00a86b;
+  --green-dark:  #007a4e;
+  --green-light: #e6f7f1;
+  --bg:          #f7f8fa;
+  --surface:     #ffffff;
+  --border:      #e2e8f0;
+  --text:        #1a202c;
+  --muted:       #64748b;
+  --radius:      14px;
+  --shadow:      0 2px 8px rgba(0,0,0,0.08);
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ── App shell ── */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  flex-shrink: 0;
+  gap: 12px;
+}
+.header-left { display: flex; align-items: center; gap: 10px; }
+.logo { font-size: 28px; }
+.header h1 { font-size: 18px; font-weight: 700; color: var(--green-dark); }
+.header p  { font-size: 12px; color: var(--muted); }
+.header-badges { display: flex; gap: 6px; flex-shrink: 0; }
+.badge {
+  font-size: 11px; font-weight: 600;
+  padding: 3px 8px; border-radius: 20px;
+  background: var(--green-light); color: var(--green-dark);
+  border: 1px solid #b2dfcc;
+}
+
+/* ── Level selector bar ── */
+.level-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.level-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-right: 2px;
+}
+.level-btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.level-btn:hover { border-color: var(--green); color: var(--green-dark); }
+.level-btn.active {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+  font-weight: 600;
+}
+.clear-btn {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1.5px solid #fca5a5;
+  background: #fff5f5;
+  color: #dc2626;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.clear-btn:hover { background: #fee2e2; }
+
+/* ── Chat wrapper ── */
+.chat-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Welcome ── */
+.welcome {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  text-align: center;
+  gap: 12px;
+}
+.welcome-icon { font-size: 56px; }
+.welcome h2   { font-size: 24px; font-weight: 700; color: var(--green-dark); }
+.welcome p    { color: var(--muted); font-size: 15px; max-width: 400px; }
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+  max-width: 640px;
+}
+.suggestion-chip {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--green);
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.suggestion-chip:hover:not(:disabled) {
+  background: var(--green);
+  color: white;
+  transform: translateY(-1px);
+}
+.suggestion-chip:disabled { opacity: 0.5; cursor: not-allowed; }
+.suggestion-chip.small { font-size: 12px; padding: 5px 10px; }
+
+/* ── Quick topics strip ── */
+.quick-topics {
+  display: flex;
+  gap: 6px;
+  padding: 6px 16px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+.quick-topics::-webkit-scrollbar { display: none; }
+
+/* ── Messages ── */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.message {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.message.user { flex-direction: row-reverse; }
+
+.avatar {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.bubble-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 80%;
+  gap: 4px;
+}
+.message.user .bubble-wrap { align-items: flex-end; }
+
+.bubble {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  box-shadow: var(--shadow);
+  line-height: 1.65;
+  word-break: break-word;
+}
+.message.user .bubble {
+  background: var(--green);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+.message.assistant .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+
+/* Markdown inside assistant bubble */
+.message.assistant .bubble p         { margin-bottom: 10px; }
+.message.assistant .bubble p:last-child { margin-bottom: 0; }
+.message.assistant .bubble h1,
+.message.assistant .bubble h2,
+.message.assistant .bubble h3        { margin: 14px 0 6px; color: var(--green-dark); font-size: 15px; }
+.message.assistant .bubble ul,
+.message.assistant .bubble ol        { padding-left: 20px; margin-bottom: 10px; }
+.message.assistant .bubble li        { margin-bottom: 4px; }
+.message.assistant .bubble code      { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: monospace; }
+.message.assistant .bubble pre       { background: #f1f5f9; padding: 12px; border-radius: 8px; overflow-x: auto; margin: 10px 0; }
+.message.assistant .bubble pre code  { background: none; padding: 0; }
+.message.assistant .bubble blockquote { border-left: 3px solid var(--green); padding-left: 12px; color: var(--muted); margin: 8px 0; font-style: italic; }
+.message.assistant .bubble strong    { color: var(--green-dark); }
+.message.assistant .bubble .katex-display { overflow-x: auto; margin: 12px 0; padding: 4px 0; }
+
+/* Copy button */
+.copy-btn {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  align-self: flex-start;
+}
+.copy-btn:hover { background: var(--green-light); color: var(--green-dark); border-color: var(--green); }
+
+/* Typing indicator */
+.typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  font-style: italic;
+  padding: 0 46px;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: bounce 1.2s infinite;
+}
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40%            { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── Input area ── */
+.input-area {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.input-area textarea {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 24px;
+  border: 1.5px solid var(--border);
+  font-size: 15px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+  min-height: 44px;
+  max-height: 160px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+}
+.input-area textarea:focus { border-color: var(--green); }
+.input-area textarea:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.send-btn {
+  width: 80px; height: 44px;
+  border-radius: 24px;
+  border: none;
+  background: var(--green);
+  color: white;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, opacity 0.15s;
+  align-self: flex-end;
+}
+.send-btn:hover:not(:disabled) { background: var(--green-dark); }
+.send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+  .header h1          { font-size: 16px; }
+  .bubble             { font-size: 14px; }
+  .bubble-wrap        { max-width: 88%; }
+  .welcome h2         { font-size: 20px; }
+  .level-bar          { padding: 6px 12px; }
+}
