@@ -79,7 +79,7 @@ export async function POST(request: Request) {
   const stream = client.messages.stream({
     model: "claude-opus-4-6",
     max_tokens: 4096,
-    thinking: { type: "adaptive" },
+    thinking: { type: "adaptive" as const },
     system: systemPrompt,
     messages: messages.map((m: { role: string; content: string }) => ({
       role: m.role,
